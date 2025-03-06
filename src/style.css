@@ -1,0 +1,16 @@
+#scoreboard{
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns:1fr 1fr 1fr;
+}
+
+h4{
+    margin-top: 0;
+}
+
+#high-score{
+    grid-column: 3;
+}
+#current-score{
+    grid-column: 2;
+}
