@@ -1,5 +1,6 @@
-export default async function getPokemon(){
-    const randomNumber = Math.floor(Math.random() * 19);
+
+export default async function getPokemon(randomNumber){
+    // const randomNumber = Math.floor(Math.random() * 19);
 
     async function assignPokemon(){
         const pokemon = {}
