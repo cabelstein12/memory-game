@@ -5,7 +5,6 @@ import './style.css';
 import './api'
 import getPokemon from './api';
 
-
 function App() {
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
@@ -13,7 +12,7 @@ function App() {
 
   function handleSetHighScore(){
     if(score >= highScore){
-     return setHighScore(highScore + 1)
+     return setHighScore(highScore + 1);
     }
   }
   function Scoreboard({score, highScore}){
@@ -35,29 +34,27 @@ function App() {
       }
       const [pokemonIndex, setPokemonIndex] = useState(generateArray());
       function handleSetMemory(poke){
-        console.log(memory, poke.name)
         setMemory([
           ...memory,
           poke.name
         ]);
       }
       function updateBoard(poke){
-        console.log(poke)
         if(memory.includes(poke.name)){
-          console.log('failed')
+          console.log('failed');
           handleHighScore(highScore);
-          handleSetScore(0)
+          handleSetScore(0);
           setMemory([]);
         }else{
-          handleSetScore(score + 1)
-          handleHighScore(highScore + 1)
-          handleSetMemory(poke)
-          setPokemonIndex(generateArray())
+          handleSetScore(score + 1);
+          handleHighScore(highScore + 1);
+          handleSetMemory(poke);
+          setPokemonIndex(generateArray());
         }
       }
     return(
       <div id='card-group'>
-        <Card index={pokemonIndex[0]} handleClick={updateBoard} /> 
+        <Card index={pokemonIndex[0]} handleClick={updateBoard}/> 
         <Card index={pokemonIndex[1]} handleClick={updateBoard}/>
         <Card index={pokemonIndex[2]} handleClick={updateBoard}/>
         <Card index={pokemonIndex[3]} handleClick={updateBoard}/>
@@ -88,7 +85,7 @@ function App() {
   return (
     <>
       <Scoreboard score={score} highScore={highScore}/>
-      <Cards score={score} highScore={highScore} handleSetScore={setScore}  handleHighScore={handleSetHighScore}/>
+      <Cards score={score} highScore={highScore} handleSetScore={setScore} handleHighScore={handleSetHighScore}/>
     </>
   )
 }
