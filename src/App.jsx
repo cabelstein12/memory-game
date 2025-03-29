@@ -9,9 +9,14 @@ import getPokemon from './api';
 function App() {
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
+  const [memory, setMemory] = useState([]);
 
+  function handleSetHighScore(){
+    if(score >= highScore){
+     return setHighScore(highScore + 1)
+    }
+  }
   function Scoreboard({score, highScore}){
-    
     return (
       <div id='scoreboard'>
         <h4>Memory Game</h4>
@@ -21,59 +26,58 @@ function App() {
     )
   }
 
-  function Cards({score, highScore, handleSetScore, handleSetHighScore}){
+  function Cards({score, highScore, handleSetScore, handleHighScore}){
       const generateArray = (arr = []) => {
         let value = Math.floor(Math.random() * 19);
         if(arr.includes(value)){return generateArray(arr)}
         else if(arr.length == 8){return arr}
         else{arr.push(value); return generateArray(arr)};
       }
-      const [numberList, setNumberList] = useState(generateArray());
-      const [memory, setMemory] = useState([]);
+      const [pokemonIndex, setPokemonIndex] = useState(generateArray());
       function handleSetMemory(poke){
         console.log(memory, poke.name)
         setMemory([
           ...memory,
-          {id: poke.name, name: poke.name}
+          poke.name
         ]);
       }
-      function addPokemonToMemory(poke){
+      function updateBoard(poke){
         console.log(poke)
-        if(memory.includes(poke)){
+        if(memory.includes(poke.name)){
           console.log('failed')
-          handleSetHighScore(highScore);
+          handleHighScore(highScore);
+          handleSetScore(0)
           setMemory([]);
         }else{
-          console.log('added to mem', memory)
           handleSetScore(score + 1)
-          handleSetHighScore(highScore + 1)
-          //handleSetMemory(poke); //  NOT WORKING HERE; IF PASSED DIRECTLY TO CARD IT WORKS THOUGH ...
-          setNumberList(generateArray())
+          handleHighScore(highScore + 1)
+          handleSetMemory(poke)
+          setPokemonIndex(generateArray())
         }
       }
     return(
       <div id='card-group'>
-        <Card number={numberList[0]} handleClick={handleSetMemory}/> 
-        <Card number={numberList[1]} handleClick={handleSetMemory}/>
-        <Card number={numberList[2]} handleClick={handleSetMemory}/>
-        <Card number={numberList[3]} handleClick={handleSetMemory}/>
-        <Card number={numberList[4]} handleClick={handleSetMemory}/>
-        <Card number={numberList[5]} handleClick={handleSetMemory}/>
-        <Card number={numberList[6]} handleClick={handleSetMemory}/>
-        <Card number={numberList[7]} handleClick={handleSetMemory}/>
+        <Card index={pokemonIndex[0]} handleClick={updateBoard} /> 
+        <Card index={pokemonIndex[1]} handleClick={updateBoard}/>
+        <Card index={pokemonIndex[2]} handleClick={updateBoard}/>
+        <Card index={pokemonIndex[3]} handleClick={updateBoard}/>
+        <Card index={pokemonIndex[4]} handleClick={updateBoard}/>
+        <Card index={pokemonIndex[5]} handleClick={updateBoard}/>
+        <Card index={pokemonIndex[6]} handleClick={updateBoard}/>
+        <Card index={pokemonIndex[7]} handleClick={updateBoard}/>
 
       </div>
     )
   }
-  function Card({number, handleClick, memory}){
+  function Card({index, handleClick}){
     const [pokemon, setPokemon] = useState(
       {
         name: 'Blastoise', 
         image: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
       }); 
     useEffect(()=>{
-      getPokemon(number).then(pokemon => setPokemon(pokemon));
-    }, [memory])
+      getPokemon(index).then(pokemon => setPokemon(pokemon));
+    }, [index])
     return(
     <div className='card' onClick={()=>handleClick(pokemon)}>
       <img src={pokemon.image} alt={pokemon.name} />
@@ -84,7 +88,7 @@ function App() {
   return (
     <>
       <Scoreboard score={score} highScore={highScore}/>
-      <Cards score={score} highScore={highScore} handleSetScore={setScore} handleSetHighScore={setHighScore}/>
+      <Cards score={score} highScore={highScore} handleSetScore={setScore}  handleHighScore={handleSetHighScore}/>
     </>
   )
 }
