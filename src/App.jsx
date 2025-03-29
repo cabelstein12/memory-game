@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import './Cards.css';
 import './style.css';
-import './api'
+import './api';
 import getPokemon from './api';
 
 function App() {
@@ -26,19 +26,13 @@ function App() {
   }
 
   function Cards({score, highScore, handleSetScore, handleHighScore}){
-      const generateArray = (arr = []) => {
-        let value = Math.floor(Math.random() * 19);
-        if(arr.includes(value)){return generateArray(arr)}
-        else if(arr.length == 8){return arr}
-        else{arr.push(value); return generateArray(arr)};
-      }
-      const [pokemonIndex, setPokemonIndex] = useState(generateArray());
-      function handleSetMemory(poke){
-        setMemory([
-          ...memory,
-          poke.name
-        ]);
-      }
+    const generateArray = (arr = []) => {
+      let value = Math.floor(Math.random() * 19);
+      if(arr.includes(value)){return generateArray(arr)}
+      else if(arr.length == 8){return arr}
+      else{arr.push(value); return generateArray(arr)};
+    }
+    const [pokemonIndex, setPokemonIndex] = useState(generateArray());
       function updateBoard(poke){
         if(memory.includes(poke.name)){
           console.log('failed');
@@ -48,7 +42,10 @@ function App() {
         }else{
           handleSetScore(score + 1);
           handleHighScore(highScore + 1);
-          handleSetMemory(poke);
+          setMemory([
+            ...memory,
+            poke.name
+          ]);
           setPokemonIndex(generateArray());
         }
       }
