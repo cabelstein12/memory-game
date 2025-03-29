@@ -8,4 +8,9 @@
 .card {
     border: 1px solid white;
     border-radius: 25px;
+    transition: box-shadow 200ms ease-in-out;
+}
+
+.card:hover {
+    box-shadow: rgb(222, 218, 218) 1.95px 1.95px 2.6px;
 }
