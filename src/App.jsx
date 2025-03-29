@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import './Cards.css';
 import './style.css';
-import './Api';
 import getPokemon from './Api';
 
 function App() {
