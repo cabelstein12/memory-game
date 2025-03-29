@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import './Cards.css';
 import './style.css';
-import getPokemon from './Api';
+import getPokemon from './Api.jsx';
 
 function App() {
   const [score, setScore] = useState(0);
