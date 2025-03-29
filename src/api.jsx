@@ -1,4 +1,3 @@
-
 export default async function getPokemon(randomNumber){
     async function assignPokemon(){
         const pokemon = {}
